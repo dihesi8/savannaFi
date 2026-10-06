@@ -4,6 +4,7 @@ import Marquee from '@/components/Marquee';
 import Protocol from '@/components/Protocol';
 import Mechanism from '@/components/Mechanism';
 import Vault from '@/components/Vault';
+import Farms from '@/components/Farms';
 import Network from '@/components/Network';
 import Terminal from '@/components/Terminal';
 import Roadmap from '@/components/Roadmap';
@@ -20,6 +21,7 @@ export default function Page() {
         <Protocol />
         <Mechanism />
         <Vault />
+        <Farms />
         <Network />
         <Terminal />
         <Roadmap />

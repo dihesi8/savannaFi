@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
+import { RPC_URL as RPC } from '@/lib/serverRpc';
 
 export const dynamic = 'force-dynamic';
 
-const RPC = process.env.RH_RPC_URL || 'https://rpc.mainnet.chain.robinhood.com';
 let cache = { at: 0, body: null };
 const TTL = 4000;
 

@@ -1,17 +1,21 @@
 'use client';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import SceneFrame from './SceneFrame';
 import CountUp from './CountUp';
-import { Arrow } from './Art';
+import { Arrow, Diamond } from './Art';
+import { useStaking } from './StakingProvider';
 import { useLiveData } from './LiveProvider';
 import ZFade from './ZFade';
 import { SVN } from '@/lib/config';
+import { POOLS } from '@/lib/pools';
 import { usd, num } from '@/lib/format';
 
 const rise = (d) => ({ initial: { opacity: 0, y: 28 }, animate: { opacity: 1, y: 0 }, transition: { duration: 1.1, delay: d, ease: [0.22, 0.8, 0.2, 1] } });
 
 export default function Hero() {
   const { gold, chain } = useLiveData();
+  const staking = useStaking();
   const price = gold.data?.price;
   const block = chain.data?.block;
   const external = SVN.buyUrl.startsWith('http');
@@ -31,10 +35,18 @@ export default function Hero() {
           <motion.p className="hero-sub" {...rise(0.35)}>
             SVN tracks one ounce of gold. MSHARE and MBOND keep it there.
           </motion.p>
+          <motion.p className="hero-farm" {...rise(0.45)}>
+            Stake SVN in {POOLS.length} stock pools on Robinhood Chain to help deepen liquidity for tokenized stocks.
+          </motion.p>
           <motion.div className="hero-actions" {...rise(0.55)}>
             <a className="btn btn-gold" href={SVN.buyUrl} {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}>Buy $SVN <Arrow /></a>
-            <a className="btn btn-line" href="#mechanism">Watch the mechanism</a>
+            <Link className="btn btn-line" href="/app">Open farms</Link>
           </motion.div>
+          <motion.ul className="hero-facts" {...rise(0.7)}>
+            <li><Diamond />{POOLS.length} stock pools</li>
+            <li><Diamond />Stake and unstake any time</li>
+            <li><Diamond />Live stock prices</li>
+          </motion.ul>
         </ZFade>
       </div>
 
@@ -45,6 +57,11 @@ export default function Hero() {
             Gold spot
             <strong>{price ? <CountUp value={price} format={(v) => usd(v)} duration={2.2} /> : 'Connecting'}</strong>
           </div>
+          <Link className="chip" href="/app">
+            <span className={`dot ${staking.ready ? '' : 'off'}`} />
+            Stock pools
+            <strong>{staking.ready ? <CountUp value={staking.asNumber(staking.totals.total)} format={(v) => `${num(v, 0)} ${staking.token.symbol} staked`} duration={2.2} /> : `${POOLS.length} open`}</strong>
+          </Link>
           <div className="chip">
             <span className={`dot ${block ? '' : 'off'}`} />
             Robinhood Chain block

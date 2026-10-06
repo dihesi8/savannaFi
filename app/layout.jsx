@@ -2,6 +2,8 @@ import './globals.css';
 import Background from '@/components/Background';
 import SmoothScroll from '@/components/SmoothScroll';
 import LiveProvider from '@/components/LiveProvider';
+import WalletProvider from '@/components/WalletProvider';
+import StakingProvider from '@/components/StakingProvider';
 
 export const metadata = {
   title: 'SavannaFi | Algorithmic gold on Robinhood Chain',
@@ -24,7 +26,7 @@ export default function RootLayout({ children }) {
       <body>
         <Background />
         <SmoothScroll />
-        <LiveProvider>{children}</LiveProvider>
+        <LiveProvider><WalletProvider><StakingProvider>{children}</StakingProvider></WalletProvider></LiveProvider>
       </body>
     </html>
   );

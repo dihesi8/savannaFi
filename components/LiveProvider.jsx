@@ -12,6 +12,7 @@ export default function LiveProvider({ children }) {
   const gold = useLive('/api/gold', 10000);
   const chain = useLive('/api/chain', 6000);
   const svn = useLive('/api/svn', 12000);
+  const stocks = useLive('/api/stocks', 30000);
   const [samples, setSamples] = useState([]);
 
   useEffect(() => {
@@ -31,5 +32,5 @@ export default function LiveProvider({ children }) {
     });
   }, [gold.data]);
 
-  return <Ctx.Provider value={{ gold, chain, svn, samples }}>{children}</Ctx.Provider>;
+  return <Ctx.Provider value={{ gold, chain, svn, stocks, samples }}>{children}</Ctx.Provider>;
 }
